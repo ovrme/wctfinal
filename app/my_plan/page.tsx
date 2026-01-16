@@ -1,9 +1,5 @@
 'use client';
 
-// Change this to a different name to avoid conflict with the import
-export const dynamicParams = true;
-export const revalidate = 0;
-
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { useSearchParams, useRouter } from "next/navigation";
@@ -72,7 +68,7 @@ function MyPlanContent() {
           </h2>
           {favorites.length === 0 ? (
             <div className="bg-white rounded-3xl p-10 text-center text-gray-500 shadow-sm border">
-              ❤️ No favorite places added yet.
+             ❤️ No favorite places added yet.
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
