@@ -1,18 +1,26 @@
 'use client';
 
+// These prevent static generation
 export const dynamic = 'force-dynamic';
-export const dynamicParams = true;
+export const revalidate = 0;
 
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { useSearchParams, useRouter } from "next/navigation";
 import { Heart, MapPin } from "lucide-react";
 
-// Dynamically import TimelinePage with no SSR
-const TimelinePage = dynamic(() => import("../../components/timeline/TimelinePage"), {
-  ssr: false,
-  loading: () => <div className="min-h-screen flex items-center justify-center">Loading timeline...</div>
-});
+// Import with ssr: false
+const TimelinePage = dynamic(
+  () => import("../../components/timeline/TimelinePage"), 
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    )
+  }
+);
 
 function MyPlanContent() {
   const searchParams = useSearchParams();
@@ -84,7 +92,11 @@ function MyPlanContent() {
 
 export default function MyPlanPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    }>
       <MyPlanContent />
     </Suspense>
   );
