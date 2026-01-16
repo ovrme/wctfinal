@@ -1,9 +1,18 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import { useSearchParams, useRouter } from "next/navigation";
-import TimelinePage from "../../components/timeline/TimelinePage";
 import { Heart, MapPin } from "lucide-react";
+
+// Dynamically import TimelinePage with no SSR
+const TimelinePage = dynamic(() => import("../../components/timeline/TimelinePage"), {
+  ssr: false,
+  loading: () => <div className="min-h-screen flex items-center justify-center">Loading timeline...</div>
+});
 
 function MyPlanContent() {
   const searchParams = useSearchParams();
