@@ -1,6 +1,7 @@
 'use client';
 
-export const dynamic = 'force-dynamic';
+// Change this to a different name to avoid conflict with the import
+export const dynamicParams = true;
 export const revalidate = 0;
 
 import { Suspense } from 'react';
