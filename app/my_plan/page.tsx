@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
+import { Suspense } from 'react';
 import { useSearchParams, useRouter } from "next/navigation";
 import TimelinePage from "../../components/timeline/TimelinePage";
 import { Heart, MapPin } from "lucide-react";
 
-export default function MyPlanPage() {
+function MyPlanContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -12,7 +13,6 @@ export default function MyPlanPage() {
   const type = searchParams.get("type") || "";
   const budget = searchParams.get("budget") || "";
   const people = parseInt(searchParams.get("people") || "1");
-
   const start = searchParams.get("start");
   const end = searchParams.get("end");
 
@@ -24,19 +24,15 @@ export default function MyPlanPage() {
     days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
   }
 
-  // Show timeline if a plan exists
   if (location) {
     return <TimelinePage location={location} type={type} budget={budget} days={days} />;
   }
 
-  // Placeholder favorites
   const favorites: any[] = [];
 
   return (
     <div className="min-h-screen mt-16 bg-slate-50 p-6 lg:p-12">
       <div className="max-w-6xl mx-auto space-y-12">
-
-        {/* EMPTY PLAN */}
         <section className="bg-white rounded-[2.5rem] p-8 lg:p-16 shadow-sm border flex flex-col items-center text-center">
           <div className="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center mb-6">
             <MapPin className="w-10 h-10 text-[#C39B50]" />
@@ -53,13 +49,11 @@ export default function MyPlanPage() {
           </button>
         </section>
 
-        {/* FAVORITES */}
         <section>
           <h2 className="text-2xl font-bold flex items-center gap-2 mb-6">
             <Heart className="w-6 h-6 text-red-500 fill-red-500" />
             My Favorites
           </h2>
-
           {favorites.length === 0 ? (
             <div className="bg-white rounded-3xl p-10 text-center text-gray-500 shadow-sm border">
               ❤️ No favorite places added yet.
@@ -74,8 +68,15 @@ export default function MyPlanPage() {
             </div>
           )}
         </section>
-
       </div>
     </div>
+  );
+}
+
+export default function MyPlanPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <MyPlanContent />
+    </Suspense>
   );
 }
