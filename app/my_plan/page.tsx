@@ -1,6 +1,5 @@
 'use client';
 
-// These prevent static generation
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
@@ -9,7 +8,6 @@ import dynamic from 'next/dynamic';
 import { useSearchParams, useRouter } from "next/navigation";
 import { Heart, MapPin } from "lucide-react";
 
-// Import with ssr: false
 const TimelinePage = dynamic(
   () => import("../../components/timeline/TimelinePage"), 
   { 
