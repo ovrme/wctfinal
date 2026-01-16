@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
-import mysql from "mysql2/promise";
-
-// Create database connection pool
-const pool = mysql.createPool(process.env.DATABASE_URL!);
+import { pool } from "@/lib/db"; // Use the shared pool instead
 
 // Helper to shuffle
 const shuffle = (array: any[]) => [...array].sort(() => Math.random() - 0.5);
